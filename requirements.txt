@@ -171,10 +171,10 @@ keras==3.8.0
 kiwisolver==1.4.8
 kubernetes==32.0.1
 lancedb==0.5.7
-langchain==0.1.20
+langchain
 langchain-cohere==0.1.5
 langchain-community==0.0.38
-langchain-core==0.2.0
+langchain-core
 langchain-experimental==0.3.4
 langchain-google-genai==0.0.7
 langchain-groq==0.2.5
