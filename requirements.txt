@@ -65,7 +65,6 @@ docker==7.1.0
 docstring_parser==0.16
 docx2txt==0.8
 dotenv==0.9.9
-duckduckgo_search==7.5.0
 durationpy==0.9
 easyocr==1.7.2
 email_validator==2.2.0
