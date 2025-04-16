@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+
+{% block title %}Friends{% endblock %}
+
+{% block content %}
+  <div class="friends-container">
+    <!-- Friend Stats Overview -->
+    <div class="friend-stats">
+      <div class="stat-card">
+        <i class="fas fa-user-friends fa-2x"></i>
+        <div class="stat-info">
+          <span class="stat-count">{{ friends_count }}</span>
+          <span class="stat-label">Friends</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-user-plus fa-2x"></i>
+        <div class="stat-info">
+          <span class="stat-count">{{ friend_requests|length }}</span>
+          <span class="stat-label">Pending Requests</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Friend Requests Section -->
+    <div class="card">
+      <div class="card-header">
+        <h2><i class="fas fa-user-clock"></i> Friend Requests</h2>
+        <span class="badge">{{ friend_requests|length }}</span>
+      </div>
+      {% if friend_requests %}
+        <div class="request-list">
+        {% for request in friend_requests %}
+          <div class="friend-request">
+            <div class="user-info">
+              <i class="fas fa-user-circle fa-2x"></i>
+              <div>
+                <strong>{{ request.sender_username }}</strong>
+                <span class="text-muted small">wants to connect with you</span>
+              </div>
+            </div>
+            <div class="request-actions">
+              <a href="/accept_request/{{ request.id }}" class="btn btn-success btn-sm">
+                <i class="fas fa-check"></i> Accept
+              </a>
+              <a href="/reject_request/{{ request.id }}" class="btn btn-danger btn-sm">
+                <i class="fas fa-times"></i> Reject
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state"><i class="far fa-bell-slash"></i> No pending friend requests</p>
+      {% endif %}
+    </div>
+
+    <!-- My Friends Section -->
+    <div class="card">
+      <div class="card-header">
+        <h2><i class="fas fa-users"></i> My Friends</h2>
+        <span class="badge">{{ friends_count }}</span>
+      </div>
+      
+      {% if friends %}
+      <div class="friends-grid">
+        {% for friend in friends %}
+          <div class="friend-card">
+            <div class="friend-avatar">
+              <i class="fas fa-user-circle fa-3x"></i>
+            </div>
+            <div class="friend-info">
+              <h3>{{ friend.username }}</h3>
+              <div class="friend-actions">
+                <a href="/view_profile/{{ friend.id }}" class="btn btn-sm">
+                  <i class="fas fa-eye"></i> Profile
+                </a>
+                <a href="/unfriend/{{ friend.id }}" class="btn btn-sm btn-outline" 
+                   onclick="return confirm('Are you sure you want to remove this friend?');">
+                  <i class="fas fa-user-minus"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% else %}
+        <p class="empty-state">
+          <i class="far fa-sad-tear"></i> You don't have any friends yet. 
+          Start connecting with people!
+        </p>
+      {% endif %}
+    </div>
+
+    <!-- Find Friends Section -->
+    <div class="card">
+      <div class="card-header">
+        <h2><i class="fas fa-search"></i> Find Friends</h2>
+      </div>
+      <form method="get" action="/search_users" class="search-form">
+        <div class="search-container">
+          <input type="text" name="query" placeholder="Search for users..." required>
+          <button type="submit" class="btn">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </div>
+      </form>
+      
+      {% if search_results %}
+        <div class="search-results">
+          {% for user in search_results %}
+            <div class="user-result">
+              <div class="user-info">
+                <i class="fas fa-user-circle fa-2x"></i>
+                <span>{{ user.username }}</span>
+              </div>
+              {% if user.id != session.user_id %}
+                <div class="user-actions">
+                  {% if user.is_friend %}
+                    <span class="friend-status">
+                      <i class="fas fa-check-circle"></i> Friends
+                    </span>
+                  {% elif user.request_sent %}
+                    <span class="friend-status pending">
+                      <i class="fas fa-clock"></i> Request Sent
+                    </span>
+                  {% else %}
+                    <a href="/send_request/{{ user.id }}" class="btn btn-primary btn-sm">
+                      <i class="fas fa-user-plus"></i> Add Friend
+                    </a>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% elif request.args.get('query') %}
+        <p class="empty-state">No users found matching your search.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>My Profile</h2>
+  
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3>{{ user.username }}</h3>
+      <p>Account Status: {{ user.status }}</p>
+      
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <h5>{{ posts_count }}</h5>
+              <p class="text-muted">Posts</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <h5>{{ friends_count }}</h5>
+              <p class="text-muted">Friends</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="text-center">
+    <a href="{{ url_for('settings') }}" class="btn btn-primary">Account Settings</a>
+  </div>
+</div>
+{% endblock %}

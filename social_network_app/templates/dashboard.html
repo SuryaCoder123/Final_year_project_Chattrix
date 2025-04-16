@@ -1,0 +1,318 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+  {# --- CREATE POST CARD (Removed as per previous request) --- #}
+  {# If you want it back, add the card structure here #}
+
+  {# --- POSTS FEED --- #}
+  {% for post in posts %}
+    <div class="card post post-card shadow-sm mb-4"> {# Added post-card class for consistency #}
+      <div class="card-body"> {# Added card-body #}
+        {# -- Post Header -- #}
+        <div class="post-header d-flex align-items-center mb-3"> {# Added d-flex for layout #}
+          <i class="fas fa-user-circle fa-2x text-secondary me-2"></i> {# Standard icon #}
+          <div class="flex-grow-1"> {# Allow username/time to fill space #}
+            {# Ensure view_profile route exists #}
+            <a href="{{ url_for('view_profile', user_id=post.user_id) }}" class="fw-bold text-dark text-decoration-none post-username">{{ post.username }}</a>
+            <span class="text-muted small post-time d-block"> {# Make time block for stacking #}
+              {% if post.created_at %}
+                {{ post.created_at.strftime('%b %d, %Y at %I:%M %p') }}
+              {% endif %}
+            </span>
+          </div>
+          {# Optional: Dropdown can be added here if needed #}
+        </div>
+
+        {# -- Post Content (Text first, then Media) -- #}
+        <div class="post-content">
+          {% if post.content %}
+             <p class="mb-2">{{ post.content }}</p> {# Post Text #}
+          {% endif %}
+          {% if post.media_url %}
+            <div class="post-media text-center mb-3"> {# Media below text #}
+              {% if post.media_type == 'image' %}
+                <img src="{{ url_for('static', filename=post.media_url) }}" class="img-fluid rounded border post-image"> {# Added post-image class #}
+              {% elif post.media_type == 'video' %}
+                <video controls class="img-fluid rounded border post-video"> {# Added post-video class #}
+                  <source src="{{ url_for('static', filename=post.media_url) }}" type="video/{{ post.media_url.split('.')[-1] }}">
+                  Your browser does not support the video tag.
+                </video>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        {# --- END OF POST CONTENT DIV --- #}
+
+        {# --- SEPARATOR AND COMMENTS AREA --- #}
+        <hr class="mt-2 mb-3">
+
+        {# -- Comment Form (Integrated Media Button, "Post" Button) -- #}
+        {# Ensure 'comment' endpoint exists #}
+        <form action="{{ url_for('comment', post_id=post.id) }}" method="post" enctype="multipart/form-data" class="comment-form mb-3">
+           <div class="d-flex align-items-center gap-2">
+              <i class="fas fa-user-circle text-secondary"></i> {# Current user avatar placeholder #}
+              <div class="input-group flex-grow-1">
+                  {# Text Input #}
+                  <input type="text" name="content" id="comment-content-{{ post.id }}" class="form-control form-control-sm comment-input" placeholder="Add a comment..." required>
+                  {# Media Button (Label for hidden input) #}
+                  <label for="comment-media-{{ post.id }}" class="btn btn-light comment-attach-btn d-flex align-items-center justify-content-center" title="Attach media">
+                     <i class="fas fa-camera"></i>
+                  </label>
+                  <input type="file" name="media" id="comment-media-{{ post.id }}" accept="image/*,video/*" style="display: none;">
+              </div>
+              {# Submit Button - Renamed to "Post" #}
+              <button type="submit" class="btn btn-primary btn-sm comment-submit-btn flex-shrink-0">Post</button>
+           </div>
+        </form>
+
+        {# -- Comment List -- #}
+        <div class="comment-list border-top pt-3">
+            {% for comment in post.comments %}
+              <div class="comment d-flex gap-2 mb-2">
+                <i class="fas fa-user-circle text-secondary"></i> {# Commenter avatar placeholder #}
+                <div class="comment-bubble bg-light p-2 rounded">
+                    {# Ensure 'view_profile' endpoint exists #}
+                    <a href="{{ url_for('view_profile', user_id=comment.user_id) }}" class="fw-bold text-dark text-decoration-none" style="font-size: 0.85rem;">{{ comment.username }}</a>:
+                    <span>{{ comment.content }}</span>
+                    {% if comment.media_url %}
+                      <div class="mt-1 comment-media-container"> {# Added container class #}
+                         {% if comment.media_type == 'image' %}
+                           <img src="{{ url_for('static', filename=comment.media_url) }}" class="img-fluid rounded border comment-media">
+                         {% elif comment.media_type == 'video' %}
+                           <video controls class="img-fluid rounded border comment-media">
+                             <source src="{{ url_for('static', filename=comment.media_url) }}" type="video/{{ comment.media_url.split('.')[-1] }}">
+                           </video>
+                         {% endif %}
+                      </div>
+                    {% endif %}
+                    <small class="d-block text-muted mt-1">
+                      {% if comment.created_at %}{{ comment.created_at.strftime('%b %d, %Y %I:%M %p') }}{% endif %}
+                    </small>
+                </div>
+              </div>
+            {% else %}
+                 <p class="text-muted small text-center no-comments">No comments yet.</p>
+            {% endfor %}
+        </div>
+        {# --- END COMMENT LIST --- #}
+
+      </div> {# End card-body #}
+    </div> {# End card post #}
+  {% endfor %}
+
+  {# --- Chatbot Icon (Using your previous structure but Bootstrap classes) --- #}
+  <button id="chatbot-icon" class="btn btn-primary rounded-circle shadow chatbot-fab" type="button" title="Chat with Assistant">
+    <i class="fas fa-robot fa-lg"></i>
+  </button>
+
+  {# --- Chatbot Interface (Using Bootstrap card structure) --- #}
+  <div id="chatbot-container" class="card shadow-lg chatbot-container d-none">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center chatbot-header">
+      <h5 class="mb-0 chatbot-title">AI Assistant</h5>
+      <button id="close-chatbot" type="button" class="btn-close btn-close-white" aria-label="Close"></button>
+    </div>
+    <div class="card-body chatbot-messages" id="chatbot-messages">
+      {# Initial Welcome Message added by JS #}
+    </div>
+    {# Thinking Indicator #}
+    <div id="thinking-indicator" class="chatbot-thinking-indicator px-3 pb-2 text-muted small" style="display: none;">
+        <i>Assistant is thinking...</i>
+    </div>
+    {# Input Area #}
+    <div class="card-footer chatbot-input-area">
+      <form id="chatbot-form" class="d-flex">
+        <input type="text" id="user-message" class="form-control form-control-sm me-2" placeholder="Ask me anything..." autocomplete="off">
+        <button type="submit" id="send-message" class="btn btn-primary btn-sm rounded-circle p-0" style="width: 32px; height: 32px;">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  {# --- Styles (SHOULD BE MOVED TO static/style.css) --- #}
+  <style>
+    /* Chatbot Styles */
+    .chatbot-icon { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 1.5rem; z-index: 1050; transition: transform 0.2s ease-in-out; }
+    .chatbot-icon:hover { transform: scale(1.1); }
+    .chatbot-container { position: fixed; bottom: 90px; right: 20px; width: 350px; height: 500px; max-height: calc(100vh - 110px); border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column; z-index: 1040; transition: transform 0.3s ease-out, opacity 0.3s ease-out; opacity: 0; transform: translateY(20px) scale(0.95); pointer-events: none; }
+    .chatbot-container.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; display: flex !important; }
+    .chatbot-header { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .chatbot-header h5.chatbot-title { margin: 0; font-size: 1.0rem; font-weight: 600;}
+    .chatbot-header .btn-close { font-size: 0.8rem; }
+    .chatbot-messages { flex: 1; padding: 1rem; overflow-y: auto; background-color: #f8f9fa; }
+    .message { margin-bottom: 0.75rem; display: flex; }
+    .message span { padding: 0.5rem 0.8rem; border-radius: 18px; max-width: 85%; word-wrap: break-word; line-height: 1.4; font-size: 0.9rem; }
+    .user-message { justify-content: flex-end; }
+    .user-message span { background-color: #0d6efd; color: white; border-bottom-right-radius: 5px; }
+    .bot-message { justify-content: flex-start; }
+    .bot-message span { background-color: #e9ecef; color: #212529; border-bottom-left-radius: 5px; }
+    .bot-error span { background-color: #f8d7da; color: #842029; }
+    .chatbot-thinking-indicator { padding: 5px 1rem; font-size: 0.85rem; color: #6c757d; border-top: 1px solid #dee2e6; background-color: #f8f9fa; }
+    .chatbot-thinking-indicator i { font-style: italic; }
+    .chatbot-input-area { padding: 0.5rem 0.75rem; background-color: #fff; border-top: 1px solid #dee2e6; }
+    .chatbot-input-area .form-control { border-radius: 20px; }
+    .chatbot-input-area .btn { border-radius: 50%; width: 32px; height: 32px; padding: 0; line-height: 1; }
+
+    /* --- Styles for dashboard cards --- */
+    .create-post-card, .post-card { border: 1px solid #dee2e6; border-radius: 0.375rem; }
+    .post-header .post-username { font-size: 0.95rem; }
+    .post-header .post-time { font-size: 0.8rem; }
+    .post-content p { font-size: 0.95rem; line-height: 1.6; }
+    
+    /* --- Fixed styles for media content --- */
+    .post-media { max-height: 500px; overflow: hidden; }
+    .post-image, .post-video { max-width: 100%; max-height: 500px; object-fit: contain; }
+    .comment-media-container { max-width: 100%; overflow: hidden; }
+    .comment-media { max-height: 100px; object-fit: contain; }
+    
+    .img-fluid { max-width: 100%; height: auto; }
+    .rounded { border-radius: 0.25rem !important; }
+    .border { border: 1px solid #dee2e6 !important; }
+    .comment-list { max-height: 300px; overflow-y: auto; }
+    .comment-bubble { background-color: #f1f3f5; font-size: 0.85rem; max-width: calc(100% - 30px); word-wrap: break-word; }
+
+    /* --- Updated Comment Form Input Group Styles --- */
+    .comment-form .input-group .form-control.comment-input { 
+      border-top-left-radius: 20px !important; 
+      border-bottom-left-radius: 20px !important; 
+      border-top-right-radius: 0 !important; 
+      border-bottom-right-radius: 0 !important; 
+      padding-left: 0.75rem; 
+      font-size: 0.9rem; 
+      border-right: none;
+    }
+    .comment-form .input-group .btn { 
+      border: 1px solid #ced4da; 
+      z-index: 2; 
+    }
+    .comment-form .input-group .comment-attach-btn { 
+      border-left: none; 
+      border-radius: 0 20px 20px 0 !important; 
+      padding: 0.375rem 0.75rem; 
+      background-color: #f8f9fa;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+    }
+    .comment-form .input-group .comment-attach-btn:hover { 
+      background-color: #e9ecef; 
+    }
+    .comment-form .comment-submit-btn { 
+      font-size: 0.9rem; 
+    }
+  </style>
+
+  {# --- JavaScript Block --- #}
+  {% block scripts %}
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // --- Chatbot Functionality ---
+        const chatbotIcon = document.getElementById('chatbot-icon');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const closeButton = document.getElementById('close-chatbot');
+        const chatbotForm = document.getElementById('chatbot-form');
+        const userInput = document.getElementById('user-message');
+        const chatMessages = document.getElementById('chatbot-messages');
+        const thinkingIndicator = document.getElementById('thinking-indicator');
+
+        function scrollToBottom() {
+            if (chatbotContainer && !chatbotContainer.classList.contains('d-none')) {
+               setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 50);
+            }
+        }
+
+        function addMessage(text, sender, isError = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', `${sender}-message`);
+            if (isError && sender === 'bot') { messageDiv.classList.add('bot-error'); }
+            const messageSpan = document.createElement('span');
+            messageSpan.textContent = text;
+            messageDiv.appendChild(messageSpan);
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        chatbotIcon.addEventListener('click', function() {
+            const isHidden = chatbotContainer.classList.contains('d-none');
+            if (isHidden) {
+                chatbotContainer.classList.remove('d-none');
+                requestAnimationFrame(() => { chatbotContainer.classList.add('active'); });
+                userInput.focus();
+                const hasMessages = chatMessages.querySelector('.message');
+                if (!hasMessages) { addMessage("Hello! How can I help you today?", 'bot'); }
+                scrollToBottom();
+            } else {
+                chatbotContainer.classList.remove('active');
+                setTimeout(() => {
+                    if (!chatbotContainer.classList.contains('active')) { chatbotContainer.classList.add('d-none'); }
+                }, 300);
+            }
+        });
+
+        closeButton.addEventListener('click', function() {
+            chatbotContainer.classList.remove('active');
+            setTimeout(() => { chatbotContainer.classList.add('d-none'); }, 300);
+        });
+
+        function handleSendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+            addMessage(message, 'user');
+            userInput.value = '';
+            thinkingIndicator.style.display = 'block';
+            scrollToBottom();
+            fetch("{{ url_for('chatbot') }}", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', /* Add CSRF if needed */ },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => {
+                thinkingIndicator.style.display = 'none';
+                if (!response.ok) {
+                     return response.json().then(err => { throw new Error(err.response || `Server error: ${response.status}`); })
+                           .catch(() => { throw new Error(`Server error: ${response.status} ${response.statusText}`); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.response) { addMessage(data.response, 'bot'); }
+                else { addMessage("Sorry, I received an empty response.", 'bot', true); }
+            })
+            .catch(error => {
+                console.error('Chatbot Fetch Error:', error);
+                thinkingIndicator.style.display = 'none';
+                addMessage(`Error: ${error.message || "Could not reach the assistant."}`, 'bot', true);
+            });
+        }
+
+        chatbotForm.addEventListener('submit', function(e) { e.preventDefault(); handleSendMessage(); });
+        userInput.addEventListener('keypress', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage(); } });
+
+        // --- File Input Visual Feedback ---
+        const fileInputs = document.querySelectorAll('input[type="file"]');
+        fileInputs.forEach(input => {
+            const label = document.querySelector(`label[for="${input.id}"]`);
+            if (label) {
+                input.addEventListener('change', function() {
+                    if (this.files.length > 0) {
+                        label.classList.add('btn-success');
+                        label.classList.remove('btn-light');
+                        label.querySelector('i').classList.remove('fa-camera');
+                        label.querySelector('i').classList.add('fa-check');
+                    } else {
+                        label.classList.remove('btn-success');
+                        label.classList.add('btn-light');
+                        label.querySelector('i').classList.add('fa-camera');
+                        label.querySelector('i').classList.remove('fa-check');
+                    }
+                });
+            }
+        });
+
+        scrollToBottom(); // Initial scroll check
+      }); // End DOMContentLoaded
+  </script>
+  {% endblock scripts %}
+{% endblock %}

@@ -1,0 +1,71 @@
+2025-04-14 17:55:54,712 - werkzeug - WARNING -  * Debugger is active!
+2025-04-14 17:55:54,712 - werkzeug - INFO -  * Debugger PIN: 138-446-247
+2025-04-14 17:57:22,865 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-14 17:57:22,865 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-14 17:57:22,865 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 17:57:23,139 - werkzeug - WARNING -  * Debugger is active!
+2025-04-14 17:57:23,139 - werkzeug - INFO -  * Debugger PIN: 138-446-247
+2025-04-14 17:57:32,726 - werkzeug - INFO -  * Detected change in 'C:\\Python312\\Lib\\encodings\\unicode_escape.py', reloading
+2025-04-14 17:57:32,897 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:32] "GET / HTTP/1.1" 200 -
+2025-04-14 17:57:32,957 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:32] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:57:33,272 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 17:57:33,555 - werkzeug - WARNING -  * Debugger is active!
+2025-04-14 17:57:33,571 - werkzeug - INFO -  * Debugger PIN: 138-446-247
+2025-04-14 17:57:39,243 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:39] "GET /register HTTP/1.1" 200 -
+2025-04-14 17:57:39,301 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:39] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:57:43,582 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:43] "[32mPOST /register HTTP/1.1[0m" 302 -
+2025-04-14 17:57:43,601 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:43] "GET /login HTTP/1.1" 200 -
+2025-04-14 17:57:43,636 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:43] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:57:47,438 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:47] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-04-14 17:57:47,487 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:47] "GET /dashboard HTTP/1.1" 200 -
+2025-04-14 17:57:47,521 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:47] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:57:57,125 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Jayasurya\\OneDrive - Nallas\\Desktop\\Final_year_try2\\social_network_app\\app.py', reloading
+2025-04-14 17:57:57,127 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Jayasurya\\OneDrive - Nallas\\Desktop\\Final_year_try2\\social_network_app\\app.py', reloading
+2025-04-14 17:57:57,414 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:57] "[32mPOST /post HTTP/1.1[0m" 302 -
+2025-04-14 17:57:57,443 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:57] "GET /dashboard HTTP/1.1" 200 -
+2025-04-14 17:57:57,482 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:57:57] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:57:57,776 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 17:57:58,106 - werkzeug - WARNING -  * Debugger is active!
+2025-04-14 17:57:58,109 - werkzeug - INFO -  * Debugger PIN: 138-446-247
+2025-04-14 17:58:00,383 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:00] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-04-14 17:58:00,400 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:00] "GET / HTTP/1.1" 200 -
+2025-04-14 17:58:00,450 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:00] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:58:01,515 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:01] "GET /register HTTP/1.1" 200 -
+2025-04-14 17:58:01,532 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:01] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:58:06,737 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:06] "[32mPOST /register HTTP/1.1[0m" 302 -
+2025-04-14 17:58:06,746 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:06] "GET /login HTTP/1.1" 200 -
+2025-04-14 17:58:06,789 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:06] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:58:12,639 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:12] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-04-14 17:58:12,756 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:12] "GET /dashboard HTTP/1.1" 200 -
+2025-04-14 17:58:12,790 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:12] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:58:21,017 - app - INFO - Created comment with ID: None
+2025-04-14 17:58:21,025 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:21] "[32mPOST /comment/30 HTTP/1.1[0m" 302 -
+2025-04-14 17:58:21,060 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:21] "GET /dashboard HTTP/1.1" 200 -
+2025-04-14 17:58:21,087 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:21] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:58:23,951 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:23] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-04-14 17:58:23,961 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:23] "GET / HTTP/1.1" 200 -
+2025-04-14 17:58:24,004 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:24] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:58:25,414 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:25] "GET /login HTTP/1.1" 200 -
+2025-04-14 17:58:25,433 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:25] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:58:30,153 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:30] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-04-14 17:58:30,184 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:30] "GET /dashboard HTTP/1.1" 200 -
+2025-04-14 17:58:30,216 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:30] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:58:33,305 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:33] "GET /notifications HTTP/1.1" 200 -
+2025-04-14 17:58:33,327 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:33] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:58:35,895 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:35] "GET /dashboard HTTP/1.1" 200 -
+2025-04-14 17:58:35,915 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:58:35] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:59:36,754 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:59:36] "GET /notifications HTTP/1.1" 200 -
+2025-04-14 17:59:36,778 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 17:59:36] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-14 17:59:49,060 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Jayasurya\\OneDrive - Nallas\\Desktop\\Final_year_try2\\social_network_app\\app.py', reloading
+2025-04-14 17:59:49,062 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Jayasurya\\OneDrive - Nallas\\Desktop\\Final_year_try2\\social_network_app\\app.py', reloading
+2025-04-14 17:59:49,063 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Jayasurya\\OneDrive - Nallas\\Desktop\\Final_year_try2\\social_network_app\\app.py', reloading
+2025-04-14 17:59:49,935 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 18:02:02,048 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 18:02:46,630 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 18:02:48,143 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 18:03:38,817 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 18:15:20,149 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 18:15:22,776 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 18:22:19,646 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-14 18:22:59,499 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)

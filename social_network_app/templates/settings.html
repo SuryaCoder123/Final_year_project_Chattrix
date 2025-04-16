@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Account Settings</h2>
+  
+  <div class="card">
+    <div class="card-body">
+      <form method="post">
+        <div class="mb-3">
+          <label for="new_password" class="form-label">New Password</label>
+          <input type="password" class="form-control" id="new_password" name="new_password">
+        </div>
+        <div class="mb-3">
+          <label for="confirm_password" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Settings</button>
+      </form>
+    </div>
+  </div>
+  
+  <div class="mt-3">
+    <a href="{{ url_for('profile') }}" class="btn btn-secondary">Back to Profile</a>
+  </div>
+</div>
+{% endblock %}

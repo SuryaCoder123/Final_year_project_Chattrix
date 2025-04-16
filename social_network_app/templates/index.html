@@ -1,0 +1,66 @@
+{% extends "layout.html" %} {# Assuming you still use layout.html for logged-out pages #}
+
+{% block title %}Welcome to Chattrix{% endblock %} {# Updated Title #}
+
+{% block content %}
+<div class="container-fluid px-0 hero-section">
+  <div class="container text-center hero-content">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-7">
+
+        {# --- ADD YOUR LOGO HERE --- #}
+        <img src="{{ url_for('static', filename='images/logo_placeholder.png') }}" alt="Chattrix Logo" class="hero-logo mb-4">
+        {# --- END OF ADDED LOGO --- #}
+
+        <h1 class="display-4 fw-bold mb-3 hero-title">Connect & Share</h1>
+        <p class="lead mb-4 hero-subtitle">
+          Join the Chattrix community. Share your moments, discover new connections,
+          and stay updated with friends. {# Updated App Name #}
+        </p>
+
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center hero-buttons">
+          <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-4 gap-3">
+            <i class="fas fa-sign-in-alt me-1"></i> Login
+          </a>
+          <a href="{{ url_for('register') }}" class="btn btn-success btn-lg px-4">
+            <i class="fas fa-user-plus me-1"></i> Register
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="hero-background-overlay"></div> {# Keep if using background image #}
+</div>
+
+{# Optional: Add feature sections below the hero #}
+
+<div class="container mt-5 py-5 features-section">
+  <h2 class="text-center mb-5">Why Join Chattrix?</h2>
+  <div class="row text-center g-4">
+    <div class="col-md-4">
+      <div class="feature-icon mb-3">
+        <i class="fas fa-images fa-3x text-primary"></i>
+      </div>
+      <h3>Share Media</h3>
+      <p>Post photos and updates easily.</p>
+    </div>
+    <div class="col-md-4">
+       <div class="feature-icon mb-3">
+        <i class="fas fa-users fa-3x text-success"></i>
+      </div>
+      <h3>Connect</h3>
+      <p>Find friends and build your network.</p>
+    </div>
+    <div class="col-md-4">
+       <div class="feature-icon mb-3">
+        <i class="fas fa-lock fa-3x text-info"></i>
+      </div>
+      <h3>Safe & Secure</h3>
+      <p>Content moderation helps keep things friendly.</p>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

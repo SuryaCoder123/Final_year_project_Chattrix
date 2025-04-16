@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}Create Post{% endblock %}
+
+{% block content %}
+<div class="card create-post-card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Create Post</h5>
+    <form action="{{ url_for('create_post') }}" method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <textarea name="content" class="form-control" rows="3" placeholder="What's on your mind, {{ session.username }}?"></textarea>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <label for="create-post-media-input" class="btn btn-sm btn-outline-secondary">
+              <i class="fas fa-photo-video me-1"></i> Photo/Video
+            </label>
+            <input type="file" name="media" id="create-post-media-input" accept="image/*,video/*" style="display: none;">
+          </div>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane me-1"></i> Post</button>
+        </div>
+        <div id="file-name" class="mt-2 text-muted" style="font-size: 0.9em;"></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- JS to show selected file name -->
+<script>
+  const fileInput = document.getElementById('create-post-media-input');
+  const fileNameDisplay = document.getElementById('file-name');
+
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files.length > 0) {
+      fileNameDisplay.textContent = "Selected file: " + fileInput.files[0].name;
+    } else {
+      fileNameDisplay.textContent = '';
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Chattrix{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emoji-mart/data"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emoji-mart/react"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='images/logo_placeholder_bg.png') }}" alt="Chattrix Logo" class="d-inline-block align-top" style="height: 50px;"> {# Adjust height as needed #}
+        {# Optional: Add text next to logo if you want: Chattrix #}
+    </a>
+      <div class="nav-links">
+        {% if 'user_id' in session %}
+          <a href="/dashboard"><i class="fas fa-home"></i> Home</a>
+          <a href="{{ url_for('create_post') }}"><i class="fas fa-plus-square me-1"></i> New Post</a>
+          <a href="/friends">
+            <i class="fas fa-user-friends"></i> Friends
+            {% if friend_requests_count > 0 %}
+              <span class="badge">{{ friend_requests_count }}</span>
+            {% endif %}
+          </a>
+          <a href="/notifications">
+            <i class="fas fa-bell"></i> Notifications
+            {% if unread_count > 0 %}
+              <span class="badge">{{ unread_count }}</span>
+            {% endif %}
+          </a>
+          <!-- ADD THESE TWO LINES HERE -->
+          <!-- END OF ADDED LINES -->
+          <div class="user-dropdown">
+            <button class="dropdown-toggle">
+              <i class="fas fa-user-circle"></i>
+              <span>{{ session.username }}</span>
+            </button>
+            <div class="dropdown-menu">
+              <a href="/profile"><i class="fas fa-id-card"></i> My Profile</a>
+              <a href="/settings"><i class="fas fa-cog"></i> Settings</a>
+              <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        {% else %}
+          <a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+          <a href="/register"><i class="fas fa-user-plus"></i> Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">
+            <i class="fas {% if category == 'success' %}fa-check-circle{% elif category == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}"></i>
+            {{ message }}
+            <button class="close-flash">&times;</button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+  
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Chattrix. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    // For closing flash messages
+    document.addEventListener('DOMContentLoaded', function() {
+      const closeButtons = document.querySelectorAll('.close-flash');
+      closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          this.parentElement.style.display = 'none';
+        });
+      });
+      
+      // User dropdown toggle
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      if (dropdownToggle) {
+        dropdownToggle.addEventListener('click', function() {
+          this.nextElementSibling.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+          if (!e.target.matches('.dropdown-toggle') && !e.target.closest('.dropdown-toggle')) {
+            const dropdowns = document.querySelectorAll('.dropdown-menu');
+            dropdowns.forEach(dropdown => {
+              if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+              }
+            });
+          }
+        });
+      }
+    });
+    
+    // Emoji picker function
+    function insertEmoji(targetId) {
+      const emojis = ['😀', '😂', '❤️', '👍', '👏', '🎉', '🔥', '😍', '🤔', '😊'];
+      const picker = document.createElement('div');
+      picker.className = 'emoji-quickpick';
+      
+      emojis.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.innerHTML = emoji;
+        btn.onclick = function() {
+          const target = document.getElementById(targetId);
+          target.value += emoji;
+          picker.remove();
+        };
+        picker.appendChild(btn);
+      });
+      
+      const targetField = document.getElementById(targetId);
+      targetField.parentNode.appendChild(picker);
+      
+      // Close when clicking outside
+      document.addEventListener('click', function closeEmoji(e) {
+        if (!picker.contains(e.target) && e.target !== document.querySelector(`button[onclick="insertEmoji('${targetId}')"]`)) {
+          picker.remove();
+          document.removeEventListener('click', closeEmoji);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
