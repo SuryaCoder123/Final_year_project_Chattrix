@@ -175,8 +175,8 @@ langchain
 langchain-cohere==0.1.5
 langchain-community
 langchain-core
-langchain-experimental==0.3.4
-langchain-google-genai==0.0.7
+langchain-experimental
+langchain-google-genai
 langchain-groq==0.2.5
 langchain-huggingface==0.0.3
 langchain-openai==0.1.7
