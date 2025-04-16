@@ -11,21 +11,6 @@
       <p id="auth-subtitle">{{ 'Register to connect with friends.' if mode == 'register' else 'Login to continue.' }}</p>
     </div>
 
-    {# Display Flash Messages Inside the Card #}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div class="flash-messages-container mb-3">
-          {% for category, message in messages %}
-            {% set alert_type = 'danger' if category == 'error' else ('warning' if category == 'warning' else 'success') %}
-             <div class="alert alert-{{ alert_type }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
-
     {# --- Login Form --- #}
     <form method="post" action="{{ url_for('login') }}" id="login-form" {% if mode == 'register' %}style="display: none;"{% endif %}>
       <div class="mb-3 input-group">
