@@ -282,7 +282,7 @@ body.auth-page { /* Add class="auth-page" to <body> in layout.html if needed for
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
     flex: 1;
 }
 
